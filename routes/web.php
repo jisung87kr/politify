@@ -1,9 +1,12 @@
 <?php
 
+use App\Models\Region;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (\App\Services\OpenApiAssemblyService $service) {
+    $region = Region::where('name', '서울')->first();
+    $result = $service->crawlDistricts($region);
+    dd($result->thxCode);
 });
 
 Route::middleware([
