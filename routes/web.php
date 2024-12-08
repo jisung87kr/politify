@@ -2,12 +2,21 @@
 
 use App\Models\Member;
 use App\Models\Region;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $members = Member::paginate(20);
-    dd($members);
-});
+Route::get('/', function (Request $request) {
+    $filters = $request->all();
+    $members = Member::filter($filters)->where('term_number', 'LIKE', '%22%')->paginate(20);
+    $parties = \App\Models\Party::all();
+    return view('home', compact('members', 'parties'));
+})->name('home');
+
+Route::get('/members', function (Request $request) {
+    $filters = $request->all();
+    $members = Member::filter($filters)->paginate(20);
+    return view('home', compact('members'));
+})->name('member');
 
 Route::middleware([
     'auth:sanctum',

@@ -8,4 +8,14 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: '0.0.0.0',
+        port: 9924,
+    },
+    resolve: {
+        alias: {
+            // 'vue': 'vue/dist/vue.esm-bundler.js', // alias 설정 추가
+            '@': 'resources/js',
+        },
+    },
 });
