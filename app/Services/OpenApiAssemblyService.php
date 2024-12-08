@@ -3,9 +3,17 @@ namespace App\Services;
 use App\Models\Region;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class OpenApiAssemblyService{
+    private $openApiKey = '983e17db8a0f4a3da5248bb16a5f1407';
+    private $pageSize = 100;
+    public function __construct()
+    {
+
+    }
     public function crawlDistricts(Region $region)
     {
         try {
@@ -41,15 +49,95 @@ class OpenApiAssemblyService{
         }
     }
 
-    public function crawlParties()
+    public function getMembers($page=1)
     {
-        $result = [];
+        $options = [
+            'query' => [
+                'KEY' => $this->openApiKey,
+                'type' => 'json',
+                'pIndex' => $page,
+                'pSize' => $this->pageSize,
+                'NAAS_NM' => '',
+                'PLPT_NM' => '',
+                'BLNG_CMIT_NM' => ''
+            ]
+        ];
+        $cacheKeyName = http_build_query($options);
+
+        $result = Cache::remember($cacheKeyName, '600', function() use ($page, $options){
+            $client = new Client();
+            $headers = [];
+
+            $request = new Request('GET', 'https://open.assembly.go.kr/portal/openapi/ALLNAMEMBER', $headers);
+            $res = $client->sendAsync($request, $options)->wait();
+            return json_decode($res->getBody());
+        });
         return $result;
     }
 
-    public function crawlTerms()
+    public function getAllMembers()
     {
-        $result = [];
+        $client = new Client();
+
+        // 첫 번째 페이지 데이터 캐시 확인
+        $cacheKeyFirstPage = "members_page_1";
+        $firstPage = Cache::remember($cacheKeyFirstPage, 3600, function () {
+            return $this->getMembers(1);
+        });
+
+        $totalCount = $firstPage->ALLNAMEMBER[0]->head[0]->list_total_count;
+        $totalPage = ceil($totalCount / $this->pageSize); // 정확한 페이지 수 계산
+
+        $promises = [];
+        $result = [
+            1 => $firstPage, // 첫 번째 페이지는 캐시에서 가져온 데이터로 초기화
+        ];
+
+        for ($page = 2; $page <= $totalPage; $page++) {
+            $cacheKey = "members_page_$page";
+
+            // 캐시가 존재하면 바로 결과에 추가
+            if (Cache::has($cacheKey)) {
+                $result[$page] = Cache::get($cacheKey);
+            } else {
+                // 캐시가 없으면 비동기 요청 생성
+                $options = [
+                    'query' => [
+                        'KEY' => $this->openApiKey,
+                        'type' => 'json',
+                        'pIndex' => $page,
+                        'pSize' => $this->pageSize,
+                        'NAAS_NM' => '',
+                        'PLPT_NM' => '',
+                        'BLNG_CMIT_NM' => ''
+                    ]
+                ];
+
+                $promises[$page] = $client->requestAsync('GET', 'https://open.assembly.go.kr/portal/openapi/ALLNAMEMBER', $options);
+            }
+        }
+
+        // 비동기 요청 처리
+        if (!empty($promises)) {
+            $responses = Promise\Utils::settle($promises)->wait();
+
+            foreach ($responses as $page => $response) {
+                if ($response['state'] === 'fulfilled') {
+                    $body = json_decode($response['value']->getBody());
+                    $result[$page] = $body;
+
+                    // 캐시에 저장
+                    Cache::put("members_page_$page", $body, 3600);
+                } else {
+                    // 요청 실패 시의 오류 처리
+                    Log::error("HTTP request for page $page failed: " . $response['reason']);
+                }
+            }
+        }
+
+        // 페이지 순서대로 정렬
+        ksort($result);
+
         return $result;
     }
 }

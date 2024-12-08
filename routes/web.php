@@ -1,12 +1,12 @@
 <?php
 
+use App\Models\Member;
 use App\Models\Region;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function (\App\Services\OpenApiAssemblyService $service) {
-    $region = Region::where('name', '서울')->first();
-    $result = $service->crawlDistricts($region);
-    dd($result->thxCode);
+Route::get('/', function () {
+    $members = Member::paginate(20);
+    dd($members);
 });
 
 Route::middleware([
