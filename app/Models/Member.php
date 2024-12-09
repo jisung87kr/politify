@@ -10,7 +10,7 @@ use Livewire\Attributes\Url;
 class Member extends Model
 {
     protected $guarded = [];
-    protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'homepage_url', 'bill_url', 'party_color', 'emails'];
+    protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'homepage_url', 'bill_url', 'party_color', 'emails', 'last_end'];
 
     public function party()
     {
@@ -81,6 +81,15 @@ class Member extends Model
         });
     }
 
+    public function lastEnd(): Attribute
+    {
+        return Attribute::make(get: function(){
+            $th = $this->getTermNumbers($this->lastTermNumber);
+            $lastEnd = array_pop($th);
+            return $lastEnd;
+        });
+    }
+
     public function emails(): Attribute
     {
         return Attribute::make(get: function(){
@@ -93,7 +102,10 @@ class Member extends Model
         return Attribute::make(
             get: function () {
                 // 전화번호 문자열
-                $phoneNumber = $this->phone_number; // e.g., "02-784-2844~6"
+                $phoneNumber = explode('/', $this->phone_number); // e.g., "02-784-2844~6"
+                $phoneNumber = $phoneNumber[0];
+                $phoneNumber = explode(',', $phoneNumber); // 공백 제거
+                $phoneNumber = $phoneNumber[0];
 
                 // 패턴으로 범위를 추출
                 if (preg_match('/(\d{2,4}-\d{3,4}-)(\d+)\~(\d+)/', $phoneNumber, $matches)) {

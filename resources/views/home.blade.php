@@ -35,8 +35,8 @@
             @foreach($members as $member)
                 <div class="w-full bg-white border-2 rounded-lg shadow" style="border-color: {{ $member->party_color }}">
                     <div class="flex flex-col items-center py-10 px-4">
-                        <div class="w-24 h-24 mb-1 rounded-full shadow-lg relative overflow-hidden mb-3">
-                            <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border" src="{{ $member->photo_url }}" alt="Bonnie image"/>
+                        <div class="w-24 h-24 mb-1 rounded-full shadow-lg relative overflow-hidden mb-3 border">
+                            <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src="{{ $member->photo_url }}" alt="Bonnie image"/>
                         </div>
                         <div class="flex gap-1 items-center">
                             <h5 class="text-xl font-medium text-gray-900">{{ $member->name_kr }}</h5>
@@ -45,8 +45,12 @@
                         <a href="mailto:{{ $member->emails[0] }}" class="text-gray-500">{{ $member->emails[0] }}</a>
                         <div class="w-full mt-5 px-5 lg:px-5 xl:px-7">
                             <div class="flex">
+                                <div class="text-sm text-gray-500 mr-3 shrink-0 w-[50px]">당선대수</div>
+                                <div class="text-sm text-gray-800 break-keep w-full">{{ $member->last_term_number ?? '-' }}</div>
+                            </div>
+                            <div class="flex">
                                 <div class="text-sm text-gray-500 mr-3 shrink-0 w-[50px]">지역</div>
-                                <div class="text-sm text-gray-800 break-keep w-full">{{ $member->last_district }}</div>
+                                <div class="text-sm text-gray-800 break-keep w-full">{{ $member->last_district ?? '-' }}</div>
                             </div>
                             <div class="flex">
                                 <div class="text-sm text-gray-500 mr-3 shrink-0 w-[50px]">생년월일</div>
@@ -56,21 +60,21 @@
                             <div class="flex">
                                 <div class="text-sm text-gray-500 mr-3 shrink-0 w-[50px]">대표번호</div>
                                 <div class="text-sm text-gray-800 break-keep">
-                                    <a href="tel:{{ $member->phone_numbers[0] }}">{{ $member->phone_numbers[0] }}</a>
+                                    <a href="tel:{{ $member->phone_numbers[0] }}">{{ $member->phone_numbers[0] ?? '-' }}</a>
                                 </div>
                             </div>
                             @endif
                         </div>
+                        @if($member->last_end > 18)
                         <div class="flex mt-4 md:mt-6">
-                            @if(request()->routeIs('home'))
                             <a href="{{ $member->homepage_url }}"
                                target="_blank"
                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">홈페이지</a>
-                            @endif
                             <a href="{{ $member->bill_url }}"
                                target="_blank"
                                class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">대표발의안</a>
                         </div>
+                        @endif
                     </div>
                 </div>
             @endforeach
