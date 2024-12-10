@@ -9,7 +9,7 @@
                 <a href="{{ $item['link'] }}" target="_black">{!! strip_tags($item['title']) !!}</a>
             </h1>
             <div>
-                <small class="text-gray-500">{{ date('m.d H시i분', strtotime($item['pubDate'])) }}</small>
+                <small class="text-gray-500">{!! date('m.d H시i분', strtotime($item['pubDate'])) !!}</small>
             </div>
             <div class="mt-3 text-gray-700">
                 <a href="{{ $item['link'] }}" target="_blank">
