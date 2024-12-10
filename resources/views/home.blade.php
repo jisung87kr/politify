@@ -36,7 +36,10 @@
                 <div class="w-full bg-white border-2 rounded-lg shadow" style="border-color: {{ $member->party_color }}">
                     <div class="flex flex-col items-center py-10 px-4">
                         <div class="w-24 h-24 mb-1 rounded-full shadow-lg relative overflow-hidden mb-3 border">
-                            <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src="{{ $member->photo_url }}" alt="Bonnie image"/>
+                            <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                 src="{{ $member->photo_url }}" alt="{{$member->name_kr}}"
+                                 onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{$member->name_en}}&color=7F9CF5&background=EBF4FF&size=100';"
+                            />
                         </div>
                         <div class="flex gap-1 items-center">
                             <h5 class="text-xl font-medium text-gray-900">{{ $member->name_kr }}</h5>

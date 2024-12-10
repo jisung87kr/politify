@@ -18,9 +18,9 @@
                     <x-nav-link href="{{ route('member') }}" :active="request()->routeIs('member')">
                         {{ __('역대 국회의원현황') }}
                     </x-nav-link>
-{{--                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">--}}
-{{--                        {{ __('통계') }}--}}
-{{--                    </x-nav-link>--}}
+                    <x-nav-link href="{{ route('news') }}" :active="request()->routeIs('news')">
+                        {{ __('정치뉴스') }}
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -18,6 +18,12 @@ Route::get('/members', function (Request $request) {
     return view('home', compact('members'));
 })->name('member');
 
+Route::get('/news', function (Request $request, \App\Services\NewsService $newsService) {
+    $news = $newsService->getNaverApiNews('정치', 100, 1);
+    $news = json_decode($news, true);
+    return view('news', compact('news'));
+})->name('news');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
