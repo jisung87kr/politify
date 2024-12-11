@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             PartySeeder::class,
             TermSeeder::class,
             MemberSeeder::class,
+            MemberSanitizeSeeder::class,
         ]);
     }
 }

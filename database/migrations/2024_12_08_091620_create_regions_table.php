@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('region_code', 100)->unique()->comment('지역 코드 (대한민국 국회 홈페이지용)');
+            $table->string('region_code', 100)->nullable()->unique()->comment('지역 코드 (대한민국 국회 홈페이지용)');
             $table->string('name', 100)->unique()->comment('지역 이름');
             $table->foreignId('parent_id')->nullable()->comment('상위 지역 (self-referencing)')->constrained('regions')->onDelete('cascade');
             $table->integer('population')->nullable()->comment('인구 수');

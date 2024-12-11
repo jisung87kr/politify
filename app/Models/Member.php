@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 
 class Member extends Model
 {
     protected $guarded = [];
     protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'homepage_url', 'bill_url', 'party_color', 'emails', 'last_end'];
+
+
 
     public function party()
     {
@@ -20,8 +23,13 @@ class Member extends Model
     public function terms()
     {
         return $this->belongsToMany(Term::class, 'member_term')
-            ->withPivot('district_id', 'party_id', 'start_date', 'end_date')
-            ->using(MemberTerm::class);
+            ->withPivot('district_id', 'party_id', 'district_id', 'district_type')->withTimestamps();
+    }
+
+    public function committees()
+    {
+        return $this->belongsToMany(Committee::class, 'member_committee')
+            ->withTimestamps();
     }
 
     public function lastParty(): Attribute

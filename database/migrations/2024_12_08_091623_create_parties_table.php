@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('parties', function (Blueprint $table) {
             $table->id();
-            $table->string('party_code', 20)->unique()->comment('정당 코드');
+            $table->string('party_code', 20)->nullable()->unique()->comment('정당 코드');
             $table->string('name', 100)->unique()->comment('정당 이름');
             $table->string('abbreviation', 20)->nullable()->comment('약칭');
             $table->string('leader', 100)->nullable()->comment('대표자 이름');

@@ -24,6 +24,22 @@ Route::get('/news', function (Request $request, \App\Services\NewsService $newsS
     return view('news', compact('news'));
 })->name('news');
 
+Route::get('/statics', function (Request $request, \App\Services\StaticsService $staticsService) {
+    // 정당별 의원현황, 당성횟수별 의원현황, 성별 의원현황, 연령별 의원현황
+    $parties = $staticsService->getPartyMembers(22);
+    $termNumbers = $staticsService->getTermNumbers(22);
+    $gender = $staticsService->getGenders(22);
+    $getAgeGroups = $staticsService->getAgeGroups(22);
+    dd($getAgeGroups);
+    $statics = [
+        'parties' => $parties,
+        'termNumbers' => $termNumbers,
+        'gender' => $gender,
+    ];
+    return view('statics', compact('statics'));
+})->name('statics');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

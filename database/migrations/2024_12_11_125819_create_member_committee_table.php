@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('committees', function (Blueprint $table) {
+        Schema::create('member_committee', function (Blueprint $table) {
             $table->id();
-            $table->string('committee_code')->nullable()->unique()->comment('위원회 코드');
-            $table->string('name')->comment('위원회명');
+            $table->foreignId('member_id')->comment('의원 ID')->constrained()->onDelete('cascade');
+            $table->foreignId('committee_id')->comment('소속 위원회 ID')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('committees');
+        Schema::dropIfExists('member_committee');
     }
 };

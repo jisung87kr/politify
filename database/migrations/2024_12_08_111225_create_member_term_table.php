@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('member_id')->comment('의원 ID')->constrained()->onDelete('cascade');
             $table->foreignId('term_id')->comment('대수 ID')->constrained()->onDelete('cascade');
-            $table->foreignId('party_id')->comment('정당 ID')->constrained()->onDelete('cascade');
-            $table->foreignId('district_id')->comment('선거구 ID')->constrained()->onDelete('cascade');
-            $table->string('district_type')->comment('선거구 구분명');
+            $table->foreignId('party_id')->nullable()->comment('정당 ID')->constrained()->onDelete('cascade');
+            $table->foreignId('district_id')->nullable()->comment('선거구 ID')->constrained()->onDelete('cascade');
+            $table->string('district_type')->nullable()->comment('선거구 구분명');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_member_term');
+        Schema::dropIfExists('member_term');
     }
 };

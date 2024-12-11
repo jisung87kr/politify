@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
-            $table->string('term_code', 20)->unique()->comment('대수 코드');
+            $table->string('term_code', 20)->nullable()->comment('대수 코드');
             $table->string('name', 50)->unique()->comment('국회 회기명 (예: 제21대)');
             $table->date('start_date')->nullable()->comment('회기 시작일');
             $table->date('end_date')->nullable()->comment('회기 종료일');
