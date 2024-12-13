@@ -15,7 +15,8 @@ class NewsService{
         $this->naverClientID = env('NAVER_CLIENT_ID');
         $this->naverCclientSecret = env('NAVER_CLIENT_SECRET');
     }
-    public function getNaverApiNews($query, $display = 10, $start = 1, $sort = 'sim'){
+    //sort = date(등록일) / sim(연관도)
+    public function getNaverApiNews($query, $display = 10, $start = 1, $sort = 'date'){
         $url = 'https://openapi.naver.com/v1/search/news.json';
         $params = [
             'query' => $query,

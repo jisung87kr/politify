@@ -4,6 +4,7 @@ use App\Models\Member;
 use App\Models\Region;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -21,9 +22,28 @@ Route::get('/members', function (Request $request) {
 })->name('member');
 
 Route::get('/news', function (Request $request, \App\Services\NewsService $newsService) {
-    $news = $newsService->getNaverApiNews('정치', 100, 1);
+    $display = 100;
+    $page = $request->get('page', 1);
+    $fistPage = $newsService->getNaverApiNews('정치', $display, 1);
+    $fistPage = json_decode($fistPage, true);
+    $totalPage = ceil($fistPage['total'] / $display);
+
+    $page = $page > $totalPage ? $totalPage : $page;
+
+    $start = ($page - 1) * $display + 1;
+    $news = $newsService->getNaverApiNews('정치', 100, $start);
     $news = json_decode($news, true);
-    return view('news', compact('news'));
+
+
+    $paginator = new LengthAwarePaginator(
+        $news['items'], // 현재 페이지의 데이터
+        $fistPage['total'],         // 전체 데이터 개수
+        $display,             // 페이지당 항목 수
+        $page,         // 현재 페이지 번호
+        ['path' => request()->url()] // URL 경로 설정
+    );
+
+    return view('news', compact('paginator'));
 })->name('news');
 
 Route::get('/statistics', function (Request $request, \App\Services\StaticsService $staticsService) {
