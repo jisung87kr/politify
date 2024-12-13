@@ -15,9 +15,13 @@ class StaticsService
     public function getPartyMembers($termId)
     {
         $result = DB::select("SELECT
-                                party_id,
                                 (SELECT name FROM parties WHERE id = member_term.party_id) AS party_name,
-                                COUNT(*) AS party_count
+                                COUNT(*) AS party_count,
+                                CASE
+                                    WHEN party_id = 1 THEN '#60a5fa'
+                                    WHEN party_id = 2 THEN '#fb7185'
+                                    ELSE '#94a3b8'
+                                END AS party_color
                             FROM member_term WHERE term_id = ?
                             GROUP BY party_id
                             ", [$termId]);
@@ -54,7 +58,7 @@ class StaticsService
     {
         return DB::select("
             SELECT
-                gender, COUNT(*) AS gender_cnt
+                gender, COUNT(*) AS gender_count
             FROM members WHERE id IN (SELECT member_id FROM member_term WHERE term_id = ?)
             GROUP BY gender
         ", [$termId]);
@@ -69,7 +73,7 @@ class StaticsService
         return DB::SELECT(
             "
                     SELECT age_group,
-                           COUNT(*) AS age_group_cnt
+                           COUNT(*) AS age_group_count
                     FROM (SELECT *,
                                  CASE
                                      WHEN age BETWEEN 10 AND 19 THEN '10대'

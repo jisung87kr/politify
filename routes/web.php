@@ -2,8 +2,10 @@
 
 use App\Models\Member;
 use App\Models\Region;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 Route::get('/', function (Request $request) {
     $filters = $request->all();
@@ -24,20 +26,22 @@ Route::get('/news', function (Request $request, \App\Services\NewsService $newsS
     return view('news', compact('news'));
 })->name('news');
 
-Route::get('/statics', function (Request $request, \App\Services\StaticsService $staticsService) {
+Route::get('/statistics', function (Request $request, \App\Services\StaticsService $staticsService) {
     // 정당별 의원현황, 당성횟수별 의원현황, 성별 의원현황, 연령별 의원현황
     $parties = $staticsService->getPartyMembers(22);
     $termNumbers = $staticsService->getTermNumbers(22);
     $gender = $staticsService->getGenders(22);
-    $getAgeGroups = $staticsService->getAgeGroups(22);
-    dd($getAgeGroups);
-    $statics = [
+    $ageGroups = $staticsService->getAgeGroups(22);
+//    dd($parties);
+    $statistics = [
         'parties' => $parties,
         'termNumbers' => $termNumbers,
         'gender' => $gender,
+        'ageGroups' => $ageGroups,
     ];
-    return view('statics', compact('statics'));
-})->name('statics');
+
+    return view('statistics', compact('statistics'));
+})->name('statistics');
 
 
 Route::middleware([
@@ -49,3 +53,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+Route::get('/user/{user}', function (User $user) {
+//    if (! request()->hasValidSignature()) {
+//        abort(401);
+//    }
+    $url = URL::signedRoute('unsubscribe', ['user' => 1]);
+    dd($url, $user);
+})->name('unsubscribe')->middleware('signed');

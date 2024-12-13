@@ -29,7 +29,16 @@
         </section>
     </div>
     <script>
+    var statistics = @json($statistics);
     function initParliamentChart(){
+        var data = statistics.parties.map(function(item){
+            return [
+                item.party_name,
+                item.party_count,
+                item.party_color,
+            ]
+        });
+
         Highcharts.chart('chart-parliament', {
             chart: {
                 type: 'item'
@@ -41,20 +50,11 @@
                 labelFormat: '{name} <span style="opacity: 0.4">{y}</span>'
             },
             series: [{
-                name: 'Representatives',
-                keys: ['name', 'y', 'color', 'label'],
-                data: [
-                    ['The Left', 39, '#CC0099', 'DIE LINKE'],
-                    ['Social Democratic Party', 206, '#EE0011', 'SPD'],
-                    ['Alliance 90/The Greens', 118, '#448833', 'GRÜNE'],
-                    ['Free Democratic Party', 92, '#FFCC00', 'FDP'],
-                    ['Christian Democratic Union', 152, '#000000', 'CDU'],
-                    ['Christian Social Union in Bavaria', 45, '#3366CC', 'CSU'],
-                    ['Alternative for Germany', 83, '#3399FF', 'AfD'],
-                    ['South Schleswig Voters\' Association', 1, '#000099', 'SSW']
-                ],
+                name: '정당별 의원현황',
+                keys: ['name', 'y', 'color'],
+                data: data,
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     format: '{point.label}',
                     style: {
                         textOutline: '3px contrast'
@@ -86,6 +86,18 @@
     }
 
     function initTermNumberChart(){
+        var category = statistics.termNumbers.map(function(item){
+            return [
+                item.term_count == 1 ? '초선' :item.term_count+'선',
+            ]
+        });
+
+        var data = statistics.termNumbers.map(function(item){
+            return [
+                item.member_count,
+            ]
+        });
+
         Highcharts.chart('chart-term_number', {
             chart: {
                 type: 'column'
@@ -94,20 +106,17 @@
                 text: '',
             },
             xAxis: {
-                categories: ['USA', 'China', 'Brazil', 'EU', 'Argentina', 'India'],
+                categories: category,
                 crosshair: true,
                 accessibility: {
-                    description: 'Countries'
+                    description: '당선횟수'
                 }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: '1000 metric tons (MT)'
+                    text: ''
                 }
-            },
-            tooltip: {
-                valueSuffix: ' (1000 MT)'
             },
             plotOptions: {
                 column: {
@@ -117,14 +126,29 @@
             },
             series: [
                 {
-                    name: 'Corn',
-                    data: [387749, 280000, 129000, 64300, 54000, 34300]
+                    name: '의원수',
+                    data: data
                 },
             ]
         });
     }
 
     function initGenderChart(){
+        let totalCount = 0;
+        statistics.gender.map(item => {
+            totalCount += item.gender_count;
+        });
+
+        let data = statistics.gender.map(item => {
+            return {
+                name: item.gender,
+                y: (item.gender_count / totalCount) * 100,
+                color: item.gender == '남' ? '#7F9CF5' : '#F472B6',
+            }
+        });
+
+        console.log(totalCount);
+
         Highcharts.chart('chart-gender', {
             chart: {
                 type: 'pie'
@@ -161,38 +185,27 @@
             },
             series: [
                 {
-                    name: 'Percentage',
+                    name: '비율',
                     colorByPoint: true,
-                    data: [
-                        {
-                            name: 'Water',
-                            y: 55.02
-                        },
-                        {
-                            name: 'Fat',
-                            sliced: true,
-                            selected: true,
-                            y: 26.71
-                        },
-                        {
-                            name: 'Carbohydrates',
-                            y: 1.09
-                        },
-                        {
-                            name: 'Protein',
-                            y: 15.5
-                        },
-                        {
-                            name: 'Ash',
-                            y: 1.68
-                        }
-                    ]
+                    data: data,
                 }
             ]
         });
     }
 
     function initAgeChart(){
+        var category = statistics.ageGroups.map(function(item){
+            return [
+                item.age_group,
+            ]
+        });
+
+        var data = statistics.ageGroups.map(function(item){
+            return [
+                item.age_group_count,
+            ]
+        });
+
         Highcharts.chart('chart-age', {
             chart: {
                 type: 'column'
@@ -201,20 +214,17 @@
                 text: '',
             },
             xAxis: {
-                categories: ['USA', 'China', 'Brazil', 'EU', 'Argentina', 'India'],
+                categories: category,
                 crosshair: true,
                 accessibility: {
-                    description: 'Countries'
+                    description: '연령'
                 }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: '1000 metric tons (MT)'
+                    text: ''
                 }
-            },
-            tooltip: {
-                valueSuffix: ' (1000 MT)'
             },
             plotOptions: {
                 column: {
@@ -224,8 +234,8 @@
             },
             series: [
                 {
-                    name: 'Corn',
-                    data: [387749, 280000, 129000, 64300, 54000, 34300]
+                    name: '의원수',
+                    data: data
                 },
             ]
         });
