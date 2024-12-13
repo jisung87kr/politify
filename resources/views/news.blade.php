@@ -6,10 +6,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="mt-6 inline-flex rounded-md shadow-sm text-center">
-            <a href="?sort=date" aria-current="page" class="px-4 py-2 text-sm font-medium bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 @if($sort == 'date') text-blue-700 @endif">
+            <a href="?sort=date" aria-current="page" class="px-4 py-2 text-sm font-medium bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 @if($sort == 'date') text-blue-700 @else text-gray-900 @endif">
                 시간순
             </a>
-            <a href="?sort=sim" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 @if($sort == 'sim') text-blue-700 @endif">
+            <a href="?sort=sim" class="px-4 py-2 text-sm font-medium bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 @if($sort == 'sim') text-blue-700 @else text-gray-900 @endif">
                 정확도순
             </a>
         </div>
