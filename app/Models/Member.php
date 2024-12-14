@@ -11,7 +11,7 @@ use Livewire\Attributes\Url;
 class Member extends Model
 {
     protected $guarded = [];
-    protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'homepage_url', 'bill_url', 'party_color', 'emails', 'last_end'];
+    protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'homepage_url', 'bill_url', 'party_color', 'emails', 'last_end', 'thumb_url'];
 
 
 
@@ -199,6 +199,14 @@ class Member extends Model
             $today = new \DateTime(); // 현재 날짜
             $age = $today->diff($birthDate)->y; // 날짜 차이 계산 후 년도만 가져옴
             return $age;
+        });
+    }
+
+    public function thumbUrl(): Attribute
+    {
+        return Attribute::make(get: function(){
+            $url = str_replace('https://www.assembly.go.kr/static/portal/img/openassm/new/', 'https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/', $this->photo_url);
+            return $url;
         });
     }
 

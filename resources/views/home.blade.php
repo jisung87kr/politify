@@ -37,7 +37,7 @@
                     <div class="flex flex-col items-center py-10 px-4">
                         <div class="w-24 h-24 mb-1 rounded-full shadow-lg relative overflow-hidden mb-3 border">
                             <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                                 src="{{ $member->photo_url }}" alt="{{$member->name_kr}}"
+                                 src="{{ $member->thumb_url }}" alt="{{$member->name_kr}}"
                                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{$member->name_en}}&color=7F9CF5&background=EBF4FF&size=100';"
                             />
                         </div>
