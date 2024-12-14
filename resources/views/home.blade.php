@@ -70,12 +70,12 @@
                         </div>
                         @if($member->last_end > 18)
                         <div class="flex mt-4 md:mt-6">
-                            <a href="{{ $member->homepage_url }}"
+                            <a href="{{ route('member.show', $member) }}"
                                target="_blank"
-                               class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">홈페이지</a>
-                            <a href="{{ $member->bill_url }}"
-                               target="_blank"
-                               class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">대표발의안</a>
+                               class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">자세히보기</a>
+{{--                            <a href="{{ $member->bill_url }}"--}}
+{{--                               target="_blank"--}}
+{{--                               class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">대표발의안</a>--}}
                         </div>
                         @endif
                     </div>

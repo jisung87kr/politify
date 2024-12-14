@@ -15,7 +15,7 @@
                     <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                         {{ __('국회의원현황') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('member') }}" :active="request()->routeIs('member')">
+                    <x-nav-link href="{{ route('member.index') }}" :active="request()->routeIs('member.index')">
                         {{ __('역대 국회의원현황') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('statistics') }}" :active="request()->routeIs('statistics')">
@@ -153,7 +153,7 @@
             <x-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                 {{ __('국회의원현황') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('member') }}" :active="request()->routeIs('member')">
+            <x-responsive-nav-link href="{{ route('member.index') }}" :active="request()->routeIs('member.index')">
                 {{ __('역대 국회의원현황') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('statistics') }}" :active="request()->routeIs('statistics')">

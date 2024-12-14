@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MemberController;
 use App\Models\Member;
 use App\Models\Region;
 use App\Models\User;
@@ -8,18 +9,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-Route::get('/', function (Request $request) {
-    $filters = $request->all();
-    $members = Member::filter($filters)->where('term_number', 'LIKE', '%22%')->paginate(20);
-    $parties = \App\Models\Party::all();
-    return view('home', compact('members', 'parties'));
-})->name('home');
-
-Route::get('/members', function (Request $request) {
-    $filters = $request->all();
-    $members = Member::filter($filters)->paginate(20);
-    return view('home', compact('members'));
-})->name('member');
+Route::get('/', [MemberController::class, 'index'])->name('home');
+Route::get('/members', [MemberController::class, 'index'])->name('member.index');
+Route::get('/members/{member}', [MemberController::class, 'show'])->name('member.show');
 
 Route::get('/news', function (Request $request, \App\Services\NewsService $newsService) {
     $display = 100;
