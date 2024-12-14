@@ -22,7 +22,7 @@
                         {{ __('국회의원 통계') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('news') }}" :active="request()->routeIs('news')">
-                        {{ __('정치뉴스') }}
+                        {{ __('뉴스') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                 {{ __('국회의원 통계') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('news') }}" :active="request()->routeIs('news')">
-                {{ __('정치뉴스') }}
+                {{ __('뉴스') }}
             </x-responsive-nav-link>
         </div>
 
