@@ -67,15 +67,25 @@
                                 </div>
                             </div>
                             @endif
+                            @if($member->last_end > 18)
+                                <div class="flex">
+                                    <div class="text-sm text-gray-500 mr-3 shrink-0 w-[50px]">홈페이지</div>
+                                    <div class="text-sm text-gray-800 break-keep">
+                                        <a href="{{ $member->homepage_url }}" target="_blank">바로가기</a>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         @if($member->last_end > 18)
                         <div class="flex mt-4 md:mt-6">
+                            @if(env('APP_ENV') === 'local')
                             <a href="{{ route('member.show', $member) }}"
                                target="_blank"
-                               class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">자세히보기</a>
-{{--                            <a href="{{ $member->bill_url }}"--}}
-{{--                               target="_blank"--}}
-{{--                               class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">대표발의안</a>--}}
+                               class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">자세히보기</a>
+                            @endif
+                            <a href="{{ $member->bill_url }}"
+                               target="_blank"
+                               class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">대표발의안</a>
                         </div>
                         @endif
                     </div>
