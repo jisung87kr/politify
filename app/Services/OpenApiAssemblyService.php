@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class OpenApiAssemblyService{
-    private $openApiKey = '983e17db8a0f4a3da5248bb16a5f1407';
+    private $openApiKey;
     private $pageSize = 100;
     public function __construct()
     {
-
+        $this->openApiKey = env('OPEN_API_KEY');
     }
     public function crawlDistricts(Region $region)
     {
