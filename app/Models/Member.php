@@ -11,7 +11,7 @@ use Livewire\Attributes\Url;
 class Member extends Model
 {
     protected $guarded = [];
-    protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'homepage_url', 'bill_url', 'party_color', 'emails', 'last_end', 'thumb_url'];
+    protected $appends = ['last_party', 'last_committee', 'last_district', 'last_district_type', 'last_term_number', 'assembly_url', 'bill_url', 'party_color', 'emails', 'last_end', 'thumb_url'];
 
 
 
@@ -79,7 +79,7 @@ class Member extends Model
         });
     }
 
-    public function homepageUrl(): Attribute
+    public function assemblyUrl(): Attribute
     {
         return Attribute::make(get: function(){
             $th = $this->getTermNumbers($this->lastTermNumber);

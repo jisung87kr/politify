@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\MemberTerm;
 use App\Models\Party;
+use App\Services\NewsService;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
+    private $newsService;
+    public function __construct(NewsService $newsService)
+    {
+        $this->newsService = $newsService;
+    }
 
     public function index()
     {
@@ -25,8 +31,15 @@ class MemberController extends Controller
         return view('home', compact('members', 'parties'));
     }
 
-    public function show(Member $member)
+    public function show(Member $member, Request $request)
     {
-        return view('member.show', compact('member'));
+        $display = 100;
+        $page = $request->get('page', 1);
+        $sort = $request->get('sort', 'sim');
+        $start = ($page - 1) * $display + 1;
+        $query = "{$member->name_kr} {$member->last_party}";
+        $news = $this->newsService->getNaverApiNews($query, 100, $start, $sort);
+        $news = json_decode($news, true);
+        return view('member.show', compact('member', 'news'));
     }
 }
