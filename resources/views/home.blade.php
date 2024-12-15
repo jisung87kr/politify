@@ -76,7 +76,7 @@
                                 </div>
                             @endif
                         </div>
-                        @if($member->last_end > 18)
+                        @if($member->last_end >= 10)
                         <div class="flex mt-4 md:mt-6">
                             <a href="{{ route('member.show', $member) }}"
                                target="_blank"
