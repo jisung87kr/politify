@@ -17,8 +17,13 @@ class SEOComposer{
             case 'home':
                 $title = config('app.name', '폴리티파이') . ' - 국회의왼현황';
                 break;
-            case 'member':
+            case 'member.index':
                 $title = config('app.name', '폴리티파이') . ' - 역대 국회의왼현황';
+                break;
+            case 'member.show':
+                $member = \Illuminate\Support\Facades\View::shared('member');
+                $title = config('app.name', '폴리티파이') . "- {$member->name_kr} 의원 - {$member->last_party}";
+                $keywords = "{$member->name_kr}, {$member->last_party}, {$member->last_district},{$member->last_district_type}, {$member->last_term_number}대 국회";
                 break;
             case 'statistics':
                 $title = config('app.name', '폴리티파이') . ' - 국회의원 통계';

@@ -7,6 +7,7 @@ use App\Models\MemberTerm;
 use App\Models\Party;
 use App\Services\NewsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class MemberController extends Controller
 {
@@ -41,6 +42,7 @@ class MemberController extends Controller
         $news = $this->newsService->getNaverApiNews($query, 100, $start, $sort);
         $news = json_decode($news, true);
         $member->load('representativeBills');
+        View::share('member', $member);
         return view('member.show', compact('member', 'news'));
     }
 }
