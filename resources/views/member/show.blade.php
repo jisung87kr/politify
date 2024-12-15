@@ -89,22 +89,15 @@
             <section class="bg-white rounded-xl px-6 py-3">
                 <h2 class="font-bold text-lg mb-2">대표발의안</h2>
                 <ul class="divide-y overflow-y-auto max-h-[500px]">
+                    @foreach($member->representativeBills as $bill)
                     <li class="py-3">
-                        <a href="" target="_blank" class="block">모두를 위한 통합교육 촉구 결의안</a>
-                        <small class="text-gray-600">2024-12-13</small>
+                        @if($bill->process_result)
+                        <small class="block mb-1">[{{ $bill->process_result }}]</small>
+                        @endif
+                        <a href="{{ $bill->detail_link }}" target="_blank" class="block font-bold">{{ $bill->bill_name }}</a>
+                        <small class="text-gray-600">{{ date('Y-m-d', strtotime($bill->committee_date)) }}</small>
                     </li>
-                    <li class="py-3">
-                        <a href="" target="_blank" class="block">모두를 위한 통합교육 촉구 결의안</a>
-                        <small class="text-gray-600">2024-12-13</small>
-                    </li>
-                    <li class="py-3">
-                        <a href="" target="_blank" class="block">모두를 위한 통합교육 촉구 결의안</a>
-                        <small class="text-gray-600">2024-12-13</small>
-                    </li>
-                    <li class="py-3">
-                        <a href="" target="_blank" class="block">모두를 위한 통합교육 촉구 결의안</a>
-                        <small class="text-gray-600">2024-12-13</small>
-                    </li>
+                    @endforeach
                 </ul>
             </section>
             <section class="bg-white rounded-xl px-6 py-3">

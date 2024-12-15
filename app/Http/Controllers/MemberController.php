@@ -40,6 +40,7 @@ class MemberController extends Controller
         $query = "{$member->name_kr} {$member->last_party}";
         $news = $this->newsService->getNaverApiNews($query, 100, $start, $sort);
         $news = json_decode($news, true);
+        $member->load('representativeBills');
         return view('member.show', compact('member', 'news'));
     }
 }

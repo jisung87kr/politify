@@ -1,13 +1,9 @@
 <?php
 
 use App\Http\Controllers\MemberController;
-use App\Models\Member;
-use App\Models\Region;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 Route::get('/', [MemberController::class, 'index'])->name('home');
 Route::get('/members', [MemberController::class, 'index'])->name('member.index');
@@ -66,10 +62,6 @@ Route::middleware([
 });
 
 
-Route::get('/user/{user}', function (User $user) {
-//    if (! request()->hasValidSignature()) {
-//        abort(401);
-//    }
-    $url = URL::signedRoute('unsubscribe', ['user' => 1]);
-    dd($url, $user);
-})->name('unsubscribe')->middleware('signed');
+Route::get('test', function (\App\Services\OpenApiAssemblyService $openApiAssemblyService) {
+
+});

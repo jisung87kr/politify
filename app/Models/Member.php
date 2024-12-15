@@ -32,6 +32,19 @@ class Member extends Model
             ->withTimestamps();
     }
 
+    public function bills()
+    {
+        return $this->belongsToMany(Bill::class, 'member_bill')->orderBy('committee_date', 'desc');
+    }
+
+    public function representativeBills()
+    {
+        return $this->belongsToMany(Bill::class, 'member_bill')
+            ->withPivot('proposer_type')
+            ->wherePivot('proposer_type', 'representative')
+            ->orderBy('committee_date', 'desc');
+    }
+
     public function lastParty(): Attribute
     {
         return Attribute::make(get: function(){
