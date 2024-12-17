@@ -37,7 +37,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
             @foreach($members as $member)
                 <div class="w-full bg-white border-1 rounded-lg shadow">
-                    <div class="flex flex-col items-center py-10 px-4">
+                    <div class="flex flex-col items-center py-5 md:py-10 px-4">
                         <div class="w-24 h-24 mb-1 rounded-full shadow-lg relative overflow-hidden mb-3 border">
                             <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                                  src="{{ $member->thumb_url }}" alt="{{$member->name_kr}}"
@@ -49,7 +49,7 @@
                             <span class="text-sm text-gray-500" style="color: {{ $member->party_color }}">({{ $member->last_party }})</span>
                         </div>
                         <a href="mailto:{{ $member->emails[0] }}" class="text-gray-500">{!! isset($member->emails[0]) && $member->emails[0] ? $member->emails[0] : '&nbsp;' !!}</a>
-                        <div class="w-full mt-5 px-5 lg:px-5 xl:px-7 flex-1">
+                        <div class="w-full mt-5 px-10 lg:px-5 xl:px-7 flex-1">
                             <div class="flex">
                                 <div class="text-sm text-gray-500 mr-3 shrink-0 w-[60px]">당선대수</div>
                                 <div class="text-sm text-gray-800 break-keep w-full">{{ $member->last_term_number ?? '-' }}</div>

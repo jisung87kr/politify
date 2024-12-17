@@ -6,8 +6,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white rounded-xl p-6 mt-6">
             <div class="md:flex gap-6">
-                <div class="shrink-0 mr-10">
-                    <img src="{{ $member->thumb_url }}" alt="" class="w-[200px] rounded-xl overflow-hidden mx-auto shadow">
+                <div class="shrink-0 md:mr-10">
+                    <img src="{{ $member->thumb_url }}" alt="" class="md:w-[200px] rounded-xl overflow-hidden mx-auto shadow">
                     <div class="text-center">
                         <div class="text-xl font-bold pt-2">
                             <span>{{ $member->name_kr }}</span> <span>({{ $member->name_ch }})</span>
@@ -94,7 +94,7 @@
                         @if($bill->process_result)
                         <small class="block mb-1">[{{ $bill->process_result }}]</small>
                         @endif
-                        <a href="{{ $bill->detail_link }}" target="_blank" class="block font-bold">{{ $bill->bill_name }}</a>
+                        <a href="{{ $bill->detail_link }}" target="_blank" class="block font-bold break-all">{{ $bill->bill_name }}</a>
                         <small class="text-gray-600">{{ date('Y-m-d', strtotime($bill->committee_date)) }}</small>
                     </li>
                     @empty
@@ -110,10 +110,10 @@
                     @forelse($news['items'] as $item)
                     <li class="py-3">
                         <a href="{{ $item['link'] }}" target="_black" >
-                            <div class="font-bold">
+                            <div class="font-bold break-all">
                                 {!! strip_tags($item['title']) !!}
                             </div>
-                            <div class="line-clamp-1 text-gray-600">
+                            <div class="line-clamp-1 text-gray-600 break-all">
                                 {!! strip_tags($item['description'])  !!}
                             </div>
                         </a>
@@ -134,10 +134,10 @@
                     @forelse($blogs['items'] as $item)
                         <li class="py-3">
                             <a href="{{ $item['link'] }}" target="_black" >
-                                <div class="font-bold">
+                                <div class="font-bold break-all">
                                     {!! strip_tags($item['title']) !!}
                                 </div>
-                                <div class="line-clamp-1 text-gray-600">
+                                <div class="line-clamp-1 text-gray-600 break-all">
                                     {!! strip_tags($item['description'])  !!}
                                 </div>
                             </a>
