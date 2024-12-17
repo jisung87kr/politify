@@ -12,17 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    <x-nav-link href="{{ route('news') }}" :active="request()->routeIs('news') || request()->routeIs('nblog')">
+                        {{ __('뉴스') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('term.member.index', config('app.currentTermId')) }}" :active="request()->routeIs('term.member.index') || request()->routeIs('statistics')">
                         {{ __('국회의원현황') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('member.index') }}" :active="request()->routeIs('member.index')">
                         {{ __('역대 국회의원현황') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('statistics') }}" :active="request()->routeIs('statistics')">
-                        {{ __('국회의원 통계') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('news') }}" :active="request()->routeIs('news')">
-                        {{ __('뉴스') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -150,17 +147,14 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+            <x-responsive-nav-link href="{{ route('news') }}" :active="request()->routeIs('news') || request()->routeIs('nblog')">
+                {{ __('뉴스') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('term.member.index', 22) }}" :active="request()->routeIs('term.member.index') || request()->routeIs('statistics')">
                 {{ __('국회의원현황') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('member.index') }}" :active="request()->routeIs('member.index')">
                 {{ __('역대 국회의원현황') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('statistics') }}" :active="request()->routeIs('statistics')">
-                {{ __('국회의원 통계') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('news') }}" :active="request()->routeIs('news')">
-                {{ __('뉴스') }}
             </x-responsive-nav-link>
         </div>
 

@@ -27,49 +27,49 @@
                             <div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">선거구</div>
-                                    <div>{{ $member->last_district }}</div>
+                                    <div>{{ $member->last_district ?? '-' }}</div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">소속위원회</div>
-                                    <div>{{ $member->committee_name }}</div>
+                                    <div>{{ $member->committee_name ?? '-' }}</div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">당선횟수</div>
-                                    <div>{{ $member->term_number }}</div>
+                                    <div>{{ $member->term_number ?? '-' }}</div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">사무실 전화</div>
                                     <div>
-                                        <a href="tel:{{ $member->phone_number }}" target="_blank">{{ $member->phone_number }}</a>
+                                        <a href="tel:{{ $member->phone_number }}" target="_blank">{{ $member->phone_number ?? '-' }}</a>
                                     </div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">사무실 호실</div>
-                                    <div>{{ $member->office_room }}</div>
+                                    <div>{{ $member->office_room ?? '-' }}</div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">개별 홈페이지</div>
                                     <div>
-                                        <a href="{{ $member->homepage_url }}" target="_blank" class="break-all">{{ $member->homepage_url }}</a>
+                                        <a href="{{ $member->homepage_url }}" target="_blank" class="break-all">{{ $member->homepage_url ?? '-' }}</a>
                                     </div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">이메일</div>
                                     <div>
-                                        <a href="mailto:{{ $member->emails[0] }}" class="break-all">{{ $member->emails[0] }}</a>
+                                        <a href="mailto:{{ $member->emails[0] }}" class="break-all">{{ $member->emails[0] ?? '-' }}</a>
                                     </div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">보좌관</div>
-                                    <div>{{ $member->aides }}</div>
+                                    <div>{{ $member->aides ?? '-' }}</div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">선임비서관</div>
-                                    <div>{{ $member->chief_secretaries }}</div>
+                                    <div>{{ $member->chief_secretaries ?? '-' }}</div>
                                 </div>
                                 <div class="flex text-gray-600 mb-2">
                                     <div class="w-[100px] mr-4 font-bold shrink-0">비서관</div>
-                                    <div>{{ $member->secretaries }}</div>
+                                    <div>{{ $member->secretaries ?? '-' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
             <section class="bg-white rounded-xl px-6 py-3">
                 <h2 class="font-bold text-lg mb-2">대표발의안</h2>
                 <ul class="divide-y overflow-y-auto max-h-[500px]">
-                    @foreach($member->representativeBills as $bill)
+                    @forelse($member->representativeBills as $bill)
                     <li class="py-3">
                         @if($bill->process_result)
                         <small class="block mb-1">[{{ $bill->process_result }}]</small>
@@ -97,13 +97,17 @@
                         <a href="{{ $bill->detail_link }}" target="_blank" class="block font-bold">{{ $bill->bill_name }}</a>
                         <small class="text-gray-600">{{ date('Y-m-d', strtotime($bill->committee_date)) }}</small>
                     </li>
-                    @endforeach
+                    @empty
+                    <li class="py-3">
+                        데이터가 존재하지 않습니다.
+                    </li>
+                    @endforelse
                 </ul>
             </section>
             <section class="bg-white rounded-xl px-6 py-3">
                 <h2 class="font-bold text-lg mb-2">의원 뉴스</h2>
                 <ul class="divide-y overflow-y-auto max-h-[500px]">
-                    @foreach($news['items'] as $item)
+                    @forelse($news['items'] as $item)
                     <li class="py-3">
                         <a href="{{ $item['link'] }}" target="_black" >
                             <div class="font-bold">
@@ -117,7 +121,35 @@
                             <small class="text-gray-600">{{ Carbon::parse($item['pubDate'])->diffForHumans() }}</small>
                         </div>
                     </li>
-                    @endforeach
+                    @empty
+                        <li class="py-3">
+                            데이터가 존재하지 않습니다.
+                        </li>
+                    @endforelse
+                </ul>
+            </section>
+            <section class="bg-white rounded-xl px-6 py-3">
+                <h2 class="font-bold text-lg mb-2">관련 포스팅</h2>
+                <ul class="divide-y overflow-y-auto max-h-[500px]">
+                    @forelse($blogs['items'] as $item)
+                        <li class="py-3">
+                            <a href="{{ $item['link'] }}" target="_black" >
+                                <div class="font-bold">
+                                    {!! strip_tags($item['title']) !!}
+                                </div>
+                                <div class="line-clamp-1 text-gray-600">
+                                    {!! strip_tags($item['description'])  !!}
+                                </div>
+                            </a>
+                            <div>
+                                <small class="text-gray-600">{{ Carbon::parse($item['postdate'])->diffForHumans() }}</small>
+                            </div>
+                        </li>
+                    @empty
+                        <li class="py-3">
+                            데이터가 존재하지 않습니다.
+                        </li>
+                    @endforelse
                 </ul>
             </section>
         </div>

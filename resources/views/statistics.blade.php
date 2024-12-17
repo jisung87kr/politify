@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        <a href="{{ route('term.member.index', $term ?? config('app.currentTermId')) }}" class="px-3 @if(request()->routeIs('term.member.index')) font-bold @endif">국회의원현황</a>
+        <a href="{{ route('statistics') }}" class="px-3 @if(request()->routeIs('statistics')) font-bold @endif">통계</a>
+    </x-slot>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/item-series.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>

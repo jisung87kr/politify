@@ -165,10 +165,10 @@ class Member extends Model
         return Attribute::make(get: function(){
             switch ($this->last_party){
                 case '더불어민주당':
-                    $color = '#60a5fa';
+                    $color = '#1d4ed8';
                     break;
                 case '국민의힘':
-                    $color = '#fb7185';
+                    $color = '#dc2626';
                     break;
                 default:
                     $color = '#94a3b8';

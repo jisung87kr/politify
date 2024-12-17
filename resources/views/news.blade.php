@@ -1,8 +1,9 @@
 @use(Carbon\Carbon)
 <x-app-layout>
-{{--    <x-slot name="header">--}}
-{{--        <h2 class="font-semibold text-xl text-gray-800 leading-tight"></h2>--}}
-{{--    </x-slot>--}}
+    <x-slot name="header">
+        <a href="{{ route('news') }}" class="px-3 @if(request()->routeIs('news')) font-bold @endif">뉴스</a>
+        <a href="{{ route('nblog') }}" class="px-3 @if(request()->routeIs('nblog')) font-bold @endif">블로그</a>
+    </x-slot>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="mt-6 inline-flex rounded-md shadow-sm text-center">
