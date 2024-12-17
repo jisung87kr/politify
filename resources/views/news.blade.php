@@ -18,7 +18,7 @@
             @foreach($paginator as $item)
             <section class="px-7 py-5">
                 <h1 class="font-bold text-lg">
-                    <a href="{{ $item['link'] }}" target="_black">{!! strip_tags($item['title']) !!}</a>
+                    <a href="{{ $item['link'] }}" target="_black" class="break-all">{!! strip_tags($item['title']) !!}</a>
                 </h1>
                 <div>
                     <small class="text-gray-500">
@@ -26,7 +26,7 @@
                     </small>
                 </div>
                 <div class="mt-3 text-gray-700">
-                    <a href="{{ $item['link'] }}" target="_blank">
+                    <a href="{{ $item['link'] }}" target="_blank" class="break-all">
                         {!! strip_tags($item['description'])  !!}
                     </a>
                 </div>

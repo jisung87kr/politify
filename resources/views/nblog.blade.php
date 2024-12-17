@@ -11,7 +11,7 @@
                 <div class="flex">
                     <div>
                         <h1 class="font-bold text-lg">
-                            <a href="https://blog.naver.com/{{ $item['blogId'] }}/{{ $item['logNo'] }}" target="_black">{!! strip_tags($item['title']) !!}</a>
+                            <a href="https://blog.naver.com/{{ $item['blogId'] }}/{{ $item['logNo'] }}" target="_black" class="break-all">{!! strip_tags($item['title']) !!}</a>
                         </h1>
                         <div>
                             <a href="https://blog.naver.com/{{ $item['blogId'] }}" target="_blank"><small>{{ $item['nickName'] }}</small></a>
@@ -21,7 +21,7 @@
                             </small>
                         </div>
                         <div class="mt-3 text-gray-700">
-                            <a href="https://blog.naver.com/{{ $item['blogId'] }}/{{ $item['logNo'] }}" target="_blank" class="line-clamp-2">
+                            <a href="https://blog.naver.com/{{ $item['blogId'] }}/{{ $item['logNo'] }}" target="_blank" class="line-clamp-2 break-all">
                                 {!! strip_tags($item['briefContents'])  !!}
                             </a>
                         </div>
